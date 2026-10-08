@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>プライバシーポリシー | pigeonBot</title><style>
+:root{--bg:#fbfaf7;--fg:#22262b;--mute:#5d6671;--line:#d9dde1;--ac:#2b6b6f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1f23;--fg:#e6e8ea;--mute:#98a1ab;--line:#33393f;--ac:#6fc0c4}}
+*{box-sizing:border-box}html{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.85 "Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:46rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+nav{display:flex;gap:1.25rem;font-size:.9rem;margin-bottom:2.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--line)}
+nav a{color:var(--mute);text-decoration:none}nav a[aria-current]{color:var(--fg);font-weight:700}
+a{color:var(--ac)}a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+h1{font-size:1.9rem;line-height:1.35;margin:0 0 .5rem}
+h2{font-size:1.15rem;margin:2.5rem 0 .5rem;padding-left:.7rem;border-left:4px solid var(--ac)}
+.meta{color:var(--mute);font-size:.9rem;margin:0 0 2rem}
+ul,ol{padding-left:1.4rem}li{margin:.3rem 0}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--mute);font-size:.85rem}
+</style></head><body><main>
+<nav><a href="index.html">pigeonBot</a><a href="terms.html">利用規約</a><a href="privacy.html" aria-current="page">プライバシーポリシー</a></nav>
+<h1>プライバシーポリシー</h1>
+<p class="meta">最終更新日: 2026年10月8日</p>
+<p>tonkatsu0211(以下「運営者」)は、Discord Bot「ぽっぽ」(リポジトリ名: pigeonBot。以下「本Bot」)における、利用者の情報の取り扱いを次のとおり定めます。</p>
+
+<h2>1. 取得する情報</h2>
+<p>本Botは、機能を提供するために、Discordから次の情報を受け取ります。</p>
+<ul>
+<li><strong>スラッシュコマンドの入力内容</strong>: <code style="font-family:ui-monospace,monospace">/finish</code> の残り点数・ブル・アウトの設定、<code style="font-family:ui-monospace,monospace">/dice</code> のサイコロの指定など</li>
+<li><strong>メッセージの内容</strong>: 本Botが閲覧できるチャンネルに投稿されたメッセージ(Botによる投稿を除く)。特定の言葉(「ぽっぽ」「鳩」「うゆゆ」)を含むかどうかを確認するために、メッセージ本文を読み取ります。</li>
+<li>上記に付随して、Discordが提供する投稿者・サーバー・チャンネルの識別情報(Botの動作の過程で一時的に扱います)</li>
+</ul>
+<p>本Botは、メールアドレス、IPアドレス、位置情報、決済情報などは取得しません。</p>
+
+<h2>2. 利用目的</h2>
+<ul>
+<li>コマンドに対する応答(フィニッシュアレンジの表示、サイコロの結果の表示、ヘルプの表示)</li>
+<li>特定の言葉を含むメッセージへのリアクションと返信</li>
+<li>不具合の調査、不正利用の防止、本Botの運営</li>
+</ul>
+<p>上記以外の目的で情報を使用しません。</p>
+
+<h2>3. 情報の保存</h2>
+<p>本Botは、メッセージの内容、コマンドの内容、ユーザーに関する情報をデータベース等に保存しません。読み取ったメッセージは、特定の言葉を含むかどうかの判定にのみ使い、判定後は破棄します。</p>
+<p>運営者の管理するサーバーの実行ログには、動作確認や不具合調査のため、「特定の言葉を検出した」という事実や、<code style="font-family:ui-monospace,monospace">/finish</code> の入力条件(残り点数など)が記録されることがあります。メッセージの本文や投稿者の情報を意図して記録することはありません。</p>
+
+<h2>4. 第三者への提供</h2>
+<p>運営者は、法令に基づく場合を除き、取得した情報を第三者に販売、提供、共有しません。なお、本BotはDiscordのサービス上で動作するため、Discordが各自のプライバシーポリシーに基づいて情報を取り扱います。詳しくは<a href="https://discord.com/privacy">Discordのプライバシーポリシー</a>をご確認ください。</p>
+
+<h2>5. 安全管理</h2>
+<p>運営者は、Botのトークンなどの認証情報を適切に管理し、情報の漏えいや不正アクセスの防止に努めます。</p>
+
+<h2>6. 読み取りの停止・情報の削除</h2>
+<p>メッセージの読み取りを止めたい場合は、サーバーの管理者が本Botのチャンネル閲覧権限を外すか、本Botをサーバーから退出させてください。ログに残る情報の削除を希望する場合は、下記の連絡先までご連絡ください。</p>
+
+<h2>7. 未成年の利用</h2>
+<p>本Botは、Discordの年齢要件を満たす方のみが利用できます。</p>
+
+<h2>8. ポリシーの変更</h2>
+<p>運営者は、必要に応じて本ポリシーを変更します。変更後の内容は、本ページに掲載した時点で効力を生じます。</p>
+
+<h2>9. お問い合わせ</h2>
+<p>情報の取り扱いに関するお問い合わせは、<a href="https://github.com/tonkatsu0211/pigeonBot/issues">GitHubのIssues</a>からお願いします。</p>
+<footer>© 2026 tonkatsu0211</footer>
+</main></body></html>
