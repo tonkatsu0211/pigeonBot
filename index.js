@@ -4,21 +4,27 @@ const {
   REST,
   Routes,
   SlashCommandBuilder,
-  EmbedBuilder
+  EmbedBuilder,
+  MessageFlags
 } = require("discord.js");
 
 const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v0.5.1");
+console.log("ぽっぽ v1.1.7");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
 }
 
+
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
 });
 
 const finishPriority = {
@@ -111,6 +117,11 @@ const goodRemainingBonus = {
   82: 75,
   83: 70,
   89: 70,
+  98: 70,
+  101: 70,
+  104: 70,
+  107: 70,
+  110: 70,
   93: 65,
   96: 65
 };
@@ -413,7 +424,7 @@ function getBestContinuationQuality(
       const value =
         100 +
         getTargetEase(dart) * 0.6 +
-        getFinishPreference(dart, outMode) * 0.12;
+        getFinishPreference(dart, outMode) * 0.3;
 
       if (value > best) {
         best = value;
@@ -588,8 +599,12 @@ function scoreRoute(
     breakdown.sameTarget += sameTarget;
 
     if (i === route.length - 1) {
-      const finishPreference =
-        getFinishPreference(dart, outMode) * 0.2;
+      let finishPreference;
+      if (dart.type === "double") {
+        finishPreference = getFinishPreference(dart, outMode) * 0.6;
+      } else {
+        finishPreference = getFinishPreference(dart, outMode) * 0.25;
+      }
 
       score += finishPreference;
       breakdown.finishPreference += finishPreference;
@@ -623,10 +638,10 @@ function scoreRoute(
     if (dart.type === "single") {
       if (route.length === 3) {
         if (i === 0) {
-          score += 40;
-          breakdown.singleBonus += 40;
+          score += 60;
+          breakdown.singleBonus += 60;
         } else if (i === 1) {
-          score += 55;
+          score += 75;
           breakdown.singleBonus += 75;
         }
       } else if (route.length === 2) {
@@ -761,7 +776,7 @@ function findFinishes(startScore, bullMode, outMode) {
     );
   });
 
-  const selected = scoredRoutes.slice(0, 4);
+  const selected = scoredRoutes.slice(0, 5);
 
   console.log(`\n[Finish] ${startScore} / ${bullMode} / ${outMode}`);
 
@@ -873,6 +888,10 @@ const dice = new SlashCommandBuilder()
       .setRequired(true)
   );
 
+const help = new SlashCommandBuilder()
+  .setName("help")
+  .setDescription("コマンド一覧を表示します");
+
 const rest = new REST({ version: "10" }).setToken(TOKEN);
 
 async function registerCommands() {
@@ -880,7 +899,7 @@ async function registerCommands() {
     await rest.put(
       Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
       {
-        body: [finish.toJSON(), dice.toJSON()]
+        body: [finish.toJSON(), dice.toJSON(), help.toJSON()]
       }
     );
 
@@ -889,7 +908,7 @@ async function registerCommands() {
     await rest.put(
       Routes.applicationCommands(CLIENT_ID),
       {
-        body: [finish.toJSON(), dice.toJSON()]
+        body: [finish.toJSON(), dice.toJSON(), help.toJSON()]
       }
     );
 
@@ -924,7 +943,9 @@ client.on("interactionCreate", async interaction => {
     );
     
     let color;
-    if (score == 180) {
+    if (routes.length === 0) {
+      color = null;
+    } else if (score == 180) {
       color = 0xb9860a;
     } else if (score >= 170) {
       color = 0xfcec3f;
@@ -953,7 +974,7 @@ client.on("interactionCreate", async interaction => {
     } else if (score > 50) {
       color = 0x1665c1;
     } else if (score > 40) {
-      color = 0x1b7601;
+      color = 0x1b76d1;
     } else if (score > 30) {
       color = 0x1f88e4;
     } else if (score > 20) {
@@ -985,7 +1006,7 @@ client.on("interactionCreate", async interaction => {
         embed.addFields({
           name: "他の候補",
           value: routes
-            .slice(1, 4)
+            .slice(1, 5)
             .map(
               (route, index) =>
                 `${index + 2}. ${formatRoute(route)}`
@@ -1004,7 +1025,7 @@ client.on("interactionCreate", async interaction => {
     if (!match) {
       await interaction.reply({
         content: "diceの値が不正です",
-        ephemeral: true
+        flags: MessageFlags.Ephemeral
       });
       return;
     }
@@ -1015,6 +1036,19 @@ client.on("interactionCreate", async interaction => {
       : 0;
     const rolls = [];
 
+    if (count > 100 || count < 1) {
+      await interaction.reply({
+        content: "diceの個数は1〜100個にしてください",
+        flags: MessageFlags.Ephemeral
+      });
+    };
+    if (sides > 500 || sides < 3) {
+      await interaction.reply({
+        content: "diceの面数は3〜500にしてください",
+        flags: MessageFlags.Ephemeral
+      });
+    }
+
     for (let i = 0; i < count; i++) {
       rolls.push(
         Math.floor(Math.random() * sides) + 1
@@ -1024,13 +1058,34 @@ client.on("interactionCreate", async interaction => {
     const total =
       rolls.reduce((sum, value) => sum + value, 0) +
       modifier;
+    const rollText = rolls.join(", ");
 
     const embed = new EmbedBuilder()
       .setColor(0x00ff00)
       .setTitle(diceType)
       .addFields({
         name: "結果",
+        value: count === 1 ? String(total) : rollText,
+        inline: true
+      });
+    if (count > 1) {
+      embed.addFields({
+        name: "合計",
         value: String(total),
+        inline: true
+      })
+    }
+
+    await interaction.reply({
+      embeds: [embed]
+    });
+  } else if (interaction.commandName === "help") {
+    const embed = new EmbedBuilder()
+      .setColor(0x00aaff)
+      .setTitle("ヘルプ")
+      .addFields({
+        name: "コマンド一覧",
+        value: "\`/finish\` ダーツの残り2〜180点のフィニッシュを最大5つ表示します。\n\`/dice\` サイコロを振ります。\n\`/help\`コマンド一覧を表示します。",
         inline: false
       });
 
@@ -1039,6 +1094,21 @@ client.on("interactionCreate", async interaction => {
     });
   } else {
     return;
+  }
+});
+
+client.on("messageCreate", async message => {
+  if (message.author.bot) return;
+  
+  if (message.content.includes("ぽっぽ") || message.content.includes("鳩")) {
+    console.log("ぽっぽ検出");
+    await message.react("<:pigeon_af:1557656470420594770>");
+    await message.reply("ぽっぽ<:pigeon_af:1557656470420594770>");
+  }
+  if (message.content.includes("うゆゆ")) {
+    console.log("うゆゆ検出");
+    await message.react("<:uyuyu:1557651030966149180>");
+    await message.reply("うゆゆ<:uyuyu:1557651030966149180>");
   }
 });
 
