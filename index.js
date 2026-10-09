@@ -14,7 +14,7 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v1.2.0");
+console.log("ぽっぽ v1.1.9");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
@@ -832,6 +832,116 @@ function getOutLabel(mode) {
   return "オープンアウト";
 }
 
+// 残り点数に応じて、色を滑らかに変化させる(HSLで補間)
+// 低い点数: 青 → 60〜90: 紫 → 100: オレンジ → 170: 黄色 → 180: 金色
+const scoreColorStops = [
+  [2, 0x42a5f6],
+  [30, 0x1f88e4],
+  [60, 0x1665c1],
+  [75, 0x5e34b0],
+  [90, 0x45289f],
+  [100, 0xe65100],
+  [120, 0xf67c01],
+  [150, 0xffa52a],
+  [170, 0xfcec3f],
+  [180, 0xb9860a]
+];
+
+function hexToHsl(hex) {
+  const r = ((hex >> 16) & 255) / 255;
+  const g = ((hex >> 8) & 255) / 255;
+  const b = (hex & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+
+  if (d === 0) {
+    return [0, 0, l];
+  }
+
+  const s = d / (1 - Math.abs(2 * l - 1));
+  let h;
+
+  if (max === r) {
+    h = ((g - b) / d) % 6;
+  } else if (max === g) {
+    h = (b - r) / d + 2;
+  } else {
+    h = (r - g) / d + 4;
+  }
+
+  return [(h * 60 + 360) % 360, s, l];
+}
+
+function hslToHex(h, s, l) {
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = l - c / 2;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+
+  if (h < 60) {
+    [r, g, b] = [c, x, 0];
+  } else if (h < 120) {
+    [r, g, b] = [x, c, 0];
+  } else if (h < 180) {
+    [r, g, b] = [0, c, x];
+  } else if (h < 240) {
+    [r, g, b] = [0, x, c];
+  } else if (h < 300) {
+    [r, g, b] = [x, 0, c];
+  } else {
+    [r, g, b] = [c, 0, x];
+  }
+
+  const to255 = value => Math.round((value + m) * 255);
+
+  return (to255(r) << 16) | (to255(g) << 8) | to255(b);
+}
+
+function getScoreColor(score) {
+  const first = scoreColorStops[0];
+  const last = scoreColorStops[scoreColorStops.length - 1];
+
+  if (score <= first[0]) {
+    return first[1];
+  }
+
+  if (score >= last[0]) {
+    return last[1];
+  }
+
+  for (let i = 0; i < scoreColorStops.length - 1; i++) {
+    const [fromScore, fromColor] = scoreColorStops[i];
+    const [toScore, toColor] = scoreColorStops[i + 1];
+
+    if (score > toScore) {
+      continue;
+    }
+
+    const t = (score - fromScore) / (toScore - fromScore);
+    const [h1, s1, l1] = hexToHsl(fromColor);
+    const [h2, s2, l2] = hexToHsl(toColor);
+
+    // 色相は短い方向に回す(紫 → オレンジは赤を経由する)
+    let dh = h2 - h1;
+
+    if (dh > 180) {
+      dh -= 360;
+    } else if (dh < -180) {
+      dh += 360;
+    }
+
+    const h = (h1 + dh * t + 360) % 360;
+
+    return hslToHex(h, s1 + (s2 - s1) * t, l1 + (l2 - l1) * t);
+  }
+
+  return last[1];
+}
+
 const finish = new SlashCommandBuilder()
   .setName("finish")
   .setDescription("ダーツのフィニッシュアレンジを表示します")
@@ -934,7 +1044,6 @@ client.on("interactionCreate", async interaction => {
   }
   
   if (interaction.commandName === "finish") {
-    console.log("command:  finish")
     await interaction.deferReply();
 
     const score = interaction.options.getInteger("score", true);
@@ -949,46 +1058,7 @@ client.on("interactionCreate", async interaction => {
       outMode
     );
     
-    let color;
-    if (routes.length === 0) {
-      color = null;
-    } else if (score == 180) {
-      color = 0xb9860a;
-    } else if (score >= 170) {
-      color = 0xfcec3f;
-    } else if (score >= 160) {
-      color = 0xfed537;
-    } else if (score >= 150) {
-      color = 0xffa52a;
-    } else if (score > 140) {
-      color = 0xff9801;
-    } else if (score > 130) {
-      color = 0xfb8b01;
-    } else if (score > 120) {
-      color = 0xf67c01;
-    } else if (score > 110) {
-      color = 0xef6c00;
-    } else if (score >= 100) {
-      color = 0xe65100; 
-    } else if (score > 90) {
-      color = 0x45289f; 
-    } else if (score > 80) {
-      color = 0x5120a7;
-    } else if (score > 70) {
-      color = 0x5e34b0;
-    } else if (score > 60) {
-      color = 0x673bb7;
-    } else if (score > 50) {
-      color = 0x1665c1;
-    } else if (score > 40) {
-      color = 0x1b76d1;
-    } else if (score > 30) {
-      color = 0x1f88e4;
-    } else if (score > 20) {
-      color = 0x2095f4;
-    } else {
-      color = 0x42a5f6;
-    }
+    const color = routes.length === 0 ? null : getScoreColor(score);
 
     const embed = new EmbedBuilder()
       .setColor(color)
@@ -1027,7 +1097,6 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "dice") {
-    console.log("command: dice")
     const diceType = interaction.options.getString("dice", true);
     const match = diceType.match(/^(\d+)d(\d+)([+-]\d+)?$/i);
     if (!match) {
@@ -1092,7 +1161,6 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "help") {
-    console.log("command: help")
     const embed = new EmbedBuilder()
       .setColor(0x00aaff)
       .setTitle("ヘルプ")
@@ -1106,9 +1174,10 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "ping") {
-    console.log("command: help")
+    const websocketPing = client.ws.ping;
+
     await interaction.reply({
-      content: `Pong! (${interaction.client.ws.ping}ms)`
+      content: `Pong!(${websocketPing}ms)`
     });
   } else {
     return;
