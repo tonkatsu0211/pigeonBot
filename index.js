@@ -14,7 +14,7 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v1.1.7");
+console.log("ぽっぽ v1.1.9");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
@@ -894,6 +894,10 @@ const help = new SlashCommandBuilder()
   .setName("help")
   .setDescription("コマンド一覧を表示します");
 
+const ping = new SlashCommandBuilder()
+  .setName("ping")
+  .setDescription("botの応答速度を計測します")
+
 const rest = new REST({ version: "10" }).setToken(TOKEN);
 
 async function registerCommands() {
@@ -901,7 +905,7 @@ async function registerCommands() {
     await rest.put(
       Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
       {
-        body: [finish.toJSON(), dice.toJSON(), help.toJSON()]
+        body: [help.toJSON(), finish.toJSON(), dice.toJSON(), ping.toJSON()]
       }
     );
 
@@ -910,7 +914,7 @@ async function registerCommands() {
     await rest.put(
       Routes.applicationCommands(CLIENT_ID),
       {
-        body: [finish.toJSON(), dice.toJSON(), help.toJSON()]
+        body: [help.toJSON(), finish.toJSON(), dice.toJSON(), ping.toJSON()]
       }
     );
 
@@ -1043,6 +1047,7 @@ client.on("interactionCreate", async interaction => {
         content: "diceの個数は1〜100個にしてください",
         flags: MessageFlags.Ephemeral
       });
+   
       return;
     }
     if (sides > 500 || sides < 3) {
@@ -1050,6 +1055,7 @@ client.on("interactionCreate", async interaction => {
         content: "diceの面数は3〜500にしてください",
         flags: MessageFlags.Ephemeral
       });
+
       return;
     }
 
@@ -1089,12 +1095,18 @@ client.on("interactionCreate", async interaction => {
       .setTitle("ヘルプ")
       .addFields({
         name: "コマンド一覧",
-        value: "\`/finish\` ダーツの残り2〜180点のフィニッシュを最大5つ表示します。\n\`/dice\` サイコロを振ります。\n\`/help\`コマンド一覧を表示します。",
+        value: "\`/finish\` ダーツの残り2〜180点のフィニッシュを最大5つ表示します。\n\`/dice\` サイコロを振ります。\n\`/ping\` botの応答速度を計測します。\n\`/help\` コマンド一覧を表示します。",
         inline: false
       });
 
     await interaction.reply({
       embeds: [embed]
+    });
+  } else if (interaction.commandName === "ping") {
+    const websocketPing = client.ws.ping;
+
+    await interaction.reply({
+      content: `Pong!(${websocketPing}ms)`
     });
   } else {
     return;
