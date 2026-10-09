@@ -12,7 +12,7 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v1.1.8");
+console.log("ぽっぽ v1.1.9");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
@@ -1097,17 +1097,10 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "ping") {
-    const start = Date.now();
-
-    await interaction.reply({
-      content: "計測中..."
-    });
-
-    const roundTrip = Date.now() - start;
     const websocketPing = client.ws.ping;
 
-    await interaction.editReply({
-      content: `🏓 Pong!\nDiscord API往復時間: ${roundTrip}ms\nWebSocketレイテンシ: ${websocketPing}ms`
+    await interaction.reply({
+      content: `Pong!(${websocketPing}ms)`
     });
   } else {
     return;
