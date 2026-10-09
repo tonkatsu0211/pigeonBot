@@ -1107,10 +1107,8 @@ client.on("interactionCreate", async interaction => {
     });
   } else if (interaction.commandName === "ping") {
     console.log("command: help")
-    const websocketPing = client.ws.ping;
-
     await interaction.reply({
-      content: `Pong!(${websocketPing}ms)`
+      content: `Pong! (${interaction.client.ws.ping}ms)`
     });
   } else {
     return;
