@@ -2,7 +2,7 @@ services:
   - type: web
     name: pigeonbot
     runtime: node
-    plan: starter        # freeだと15分アクセスが無いとスリープし、Botがオフラインになります
+    plan: free           # freeだと15分アクセスが無いとスリープし、Botがオフラインになります
     region: singapore    # 日本から近いリージョン
     buildCommand: npm install
     startCommand: npm start
