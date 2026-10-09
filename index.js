@@ -14,7 +14,7 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v1.1.9");
+console.log("ぽっぽ v1.1.11");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
