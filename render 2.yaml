@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: pigeonbot
+    runtime: node
+    plan: starter        # freeだと15分アクセスが無いとスリープし、Botがオフラインになります
+    region: singapore    # 日本から近いリージョン
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DISCORD_TOKEN
+        sync: false      # Renderの画面で入力
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      # 特定サーバーだけにコマンドを登録したい場合のみ設定
+      # - key: DISCORD_GUILD_ID
+      #   sync: false
