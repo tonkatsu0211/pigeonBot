@@ -14,7 +14,7 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v1.1.9");
+console.log("ぽっぽ v1.2.0");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
@@ -934,6 +934,7 @@ client.on("interactionCreate", async interaction => {
   }
   
   if (interaction.commandName === "finish") {
+    console.log("command:  finish")
     await interaction.deferReply();
 
     const score = interaction.options.getInteger("score", true);
@@ -1026,6 +1027,7 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "dice") {
+    console.log("command: dice")
     const diceType = interaction.options.getString("dice", true);
     const match = diceType.match(/^(\d+)d(\d+)([+-]\d+)?$/i);
     if (!match) {
@@ -1090,6 +1092,7 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "help") {
+    console.log("command: help")
     const embed = new EmbedBuilder()
       .setColor(0x00aaff)
       .setTitle("ヘルプ")
@@ -1103,6 +1106,7 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "ping") {
+    console.log("command: help")
     const websocketPing = client.ws.ping;
 
     await interaction.reply({
