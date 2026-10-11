@@ -991,6 +991,186 @@ const finish = new SlashCommandBuilder()
       )
   );
 
+const handicap = new SlashCommandBuilder()
+  .setName("handicap")
+  .setDescription("ハンディキャップを計算します")
+  .addSubcommandGroup(group =>
+    group
+      .setName("dl1")
+      .setDescription("DARTSLIVEハンデ")
+      .addSubcommand(subcommand =>
+        subcommand
+          .setName("singles")
+          .setDescription("シングルス")
+          .addStringOption(option =>
+            option
+              .setName("gameMode")
+              .setDescription("ゲームの種類")
+              .setRequired(true)
+              .addChoices(
+                {
+                  name: "301",
+                  value: "301"
+                },
+                {
+                  name: "501",
+                  value: "501"
+                },
+                {
+                  name: "701",
+                  value: "701"
+                },
+                {
+                  name: "901",
+                  value: "901"
+                },
+                {
+                  name: "1101",
+                  value: "1101"
+                },
+                {
+                  name: "1501",
+                  value: "1501"
+                },
+                {
+                  name: "CRICKET",
+                  value: "cricket"
+                }
+              )
+          )
+          .addNumberOption(option =>
+            option
+              .setName("rating1")
+              .setDescription("1人目のレーティング")
+              .setRequired(true)
+              .setMinValue(1)
+              .setMaxValue(19)
+          )
+          .addNumberOption(option =>
+            option
+              .setName("rating2")
+              .setDescription("2人目のレーティング")
+              .setRequired(true)
+              .setMinValue(1)
+              .setMaxValue(19)
+          )
+      )
+      .addSubcommand(subcommand =>
+        subcommand
+          .setName("doubles")
+          .setDescription("ダブルス")
+          .addStringOption(option =>
+            option
+              .setName("gameMode")
+              .setDescription("ゲームの種類")
+              .setRequired(true)
+              .addChoices(
+                {
+                  name: "301",
+                  value: "301"
+                },
+                {
+                  name: "501",
+                  value: "501"
+                },
+                {
+                  name: "701",
+                  value: "701"
+                },
+                {
+                  name: "901",
+                  value: "901"
+                },
+                {
+                  name: "1101",
+                  value: "1101"
+                },
+                {
+                  name: "1501",
+                  value: "1501"
+                },
+                {
+                  name: "CRICKET",
+                  value: "cricket"
+                }
+              )
+          )
+          .addNumberOption(option =>
+            option
+              .setName("rating1")
+              .setDescription("1チーム目の合計レーティング")
+              .setRequired(true)
+              .setMinValue(1)
+              .setMaxValue(38)
+          )
+          .addNumberOption(option =>
+            option
+              .setName("rating2")
+              .setDescription("2チーム目の合計レーティング")
+              .setRequired(true)
+              .setMinValue(1)
+              .setMaxValue(38)
+          )
+      )
+  )
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName("dl2")
+      .setDescription("DARTSLIVE2ハンデ")
+      .addStringOption(option =>
+        option
+          .setName("gameMode")
+          .setDescription("ゲームの種類")
+          .setRequired(true)
+          .addChoices(
+            {
+              name: "301",
+              value: "301"
+            },
+            {
+              name: "501",
+              value: "501"
+            },
+            {
+              name: "701",
+              value: "701"
+            },
+            {
+              name: "901",
+              value: "901"
+            },
+            {
+              name: "1101",
+              value: "1101"
+            },
+            {
+              name: "1501",
+              value: "1501"
+            },
+            {
+              name: "CRICKET",
+              value: "cricket"
+            }
+          )
+      )
+      .addNumberOption(option =>
+        option
+          .setName("rating1")
+          .setDescription("1人目/1チーム目のレーティング")
+          .setRequired(true)
+          .setMinValue(1)
+          .setMaxValue(38)
+      )
+      .addNumberOption(option =>
+        option
+          .setName("rating2")
+          .setDescription("2人目/2チーム目のレーティング")
+          .setRequired(true)
+          .setMinValue(1)
+          .setMaxValue(38)
+      )
+  )
+
 const dice = new SlashCommandBuilder()
   .setName("dice")
   .setDescription("サイコロを振ります")
