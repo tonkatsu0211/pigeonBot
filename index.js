@@ -1004,7 +1004,7 @@ const handicap = new SlashCommandBuilder()
           .setDescription("シングルス")
           .addStringOption(option =>
             option
-              .setName("gameMode")
+              .setName("gamemode")
               .setDescription("ゲームの種類")
               .setRequired(true)
               .addChoices(
@@ -1061,7 +1061,7 @@ const handicap = new SlashCommandBuilder()
           .setDescription("ダブルス")
           .addStringOption(option =>
             option
-              .setName("gameMode")
+              .setName("gamemode")
               .setDescription("ゲームの種類")
               .setRequired(true)
               .addChoices(
@@ -1119,7 +1119,7 @@ const handicap = new SlashCommandBuilder()
       .setDescription("DARTSLIVE2ハンデ")
       .addStringOption(option =>
         option
-          .setName("gameMode")
+          .setName("gamemode")
           .setDescription("ゲームの種類")
           .setRequired(true)
           .addChoices(
