@@ -9,6 +9,7 @@ const {
   EmbedBuilder,
   MessageFlags
 } = require("discord.js");
+const dlhandicap = require("./handicap.json");
 
 const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
