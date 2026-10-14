@@ -989,187 +989,16 @@ const finish = new SlashCommandBuilder()
           value: "open"
         }
       )
+  )
+  .setIntegrationTypes(
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  )
+  .setContexts(
+    InteractionContextType.Guild,
+    InteractionContextType.BotDM,
+    InteractionContextType.PrivateChannel
   );
-
-const handicap = new SlashCommandBuilder()
-  .setName("handicap")
-  .setDescription("ハンディキャップを計算します")
-  .addSubcommandGroup(group =>
-    group
-      .setName("dl1")
-      .setDescription("DARTSLIVEハンデ")
-      .addSubcommand(subcommand =>
-        subcommand
-          .setName("singles")
-          .setDescription("シングルス")
-          .addStringOption(option =>
-            option
-              .setName("gamemode")
-              .setDescription("ゲームの種類")
-              .setRequired(true)
-              .addChoices(
-                {
-                  name: "301",
-                  value: "301"
-                },
-                {
-                  name: "501",
-                  value: "501"
-                },
-                {
-                  name: "701",
-                  value: "701"
-                },
-                {
-                  name: "901",
-                  value: "901"
-                },
-                {
-                  name: "1101",
-                  value: "1101"
-                },
-                {
-                  name: "1501",
-                  value: "1501"
-                },
-                {
-                  name: "CRICKET",
-                  value: "cricket"
-                }
-              )
-          )
-          .addNumberOption(option =>
-            option
-              .setName("rating1")
-              .setDescription("1人目のレーティング")
-              .setRequired(true)
-              .setMinValue(1)
-              .setMaxValue(19)
-          )
-          .addNumberOption(option =>
-            option
-              .setName("rating2")
-              .setDescription("2人目のレーティング")
-              .setRequired(true)
-              .setMinValue(1)
-              .setMaxValue(19)
-          )
-      )
-      .addSubcommand(subcommand =>
-        subcommand
-          .setName("doubles")
-          .setDescription("ダブルス")
-          .addStringOption(option =>
-            option
-              .setName("gamemode")
-              .setDescription("ゲームの種類")
-              .setRequired(true)
-              .addChoices(
-                {
-                  name: "301",
-                  value: "301"
-                },
-                {
-                  name: "501",
-                  value: "501"
-                },
-                {
-                  name: "701",
-                  value: "701"
-                },
-                {
-                  name: "901",
-                  value: "901"
-                },
-                {
-                  name: "1101",
-                  value: "1101"
-                },
-                {
-                  name: "1501",
-                  value: "1501"
-                },
-                {
-                  name: "CRICKET",
-                  value: "cricket"
-                }
-              )
-          )
-          .addNumberOption(option =>
-            option
-              .setName("rating1")
-              .setDescription("1チーム目の合計レーティング")
-              .setRequired(true)
-              .setMinValue(1)
-              .setMaxValue(38)
-          )
-          .addNumberOption(option =>
-            option
-              .setName("rating2")
-              .setDescription("2チーム目の合計レーティング")
-              .setRequired(true)
-              .setMinValue(1)
-              .setMaxValue(38)
-          )
-      )
-  )
-  .addSubcommand(subcommand =>
-    subcommand
-      .setName("dl2")
-      .setDescription("DARTSLIVE2ハンデ")
-      .addStringOption(option =>
-        option
-          .setName("gamemode")
-          .setDescription("ゲームの種類")
-          .setRequired(true)
-          .addChoices(
-            {
-              name: "301",
-              value: "301"
-            },
-            {
-              name: "501",
-              value: "501"
-            },
-            {
-              name: "701",
-              value: "701"
-            },
-            {
-              name: "901",
-              value: "901"
-            },
-            {
-              name: "1101",
-              value: "1101"
-            },
-            {
-              name: "1501",
-              value: "1501"
-            },
-            {
-              name: "CRICKET",
-              value: "cricket"
-            }
-          )
-      )
-      .addNumberOption(option =>
-        option
-          .setName("rating1")
-          .setDescription("1人目/1チーム目のレーティング")
-          .setRequired(true)
-          .setMinValue(1)
-          .setMaxValue(38)
-      )
-      .addNumberOption(option =>
-        option
-          .setName("rating2")
-          .setDescription("2人目/2チーム目のレーティング")
-          .setRequired(true)
-          .setMinValue(1)
-          .setMaxValue(38)
-      )
-  )
 
 const dice = new SlashCommandBuilder()
   .setName("dice")
@@ -1179,15 +1008,113 @@ const dice = new SlashCommandBuilder()
       .setName("dice")
       .setDescription("サイコロの種類(例: 1d6, 1d100)")
       .setRequired(true)
+  )
+  .setIntegrationTypes(
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  )
+  .setContexts(
+    InteractionContextType.Guild,
+    InteractionContextType.BotDM,
+    InteractionContextType.PrivateChannel
   );
 
 const help = new SlashCommandBuilder()
   .setName("help")
-  .setDescription("コマンド一覧を表示します");
+  .setDescription("コマンド一覧を表示します")
+  .setIntegrationTypes(
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  )
+  .setContexts(
+    InteractionContextType.Guild,
+    InteractionContextType.BotDM,
+    InteractionContextType.PrivateChannel
+  );
 
 const ping = new SlashCommandBuilder()
   .setName("ping")
   .setDescription("botの応答速度を計測します")
+  .setIntegrationTypes(
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  )
+  .setContexts(
+    InteractionContextType.Guild,
+    InteractionContextType.BotDM,
+    InteractionContextType.PrivateChannel
+  );
+
+const handicapGames = ["301", "501", "701", "901", "1101", "1501", "cricket"];
+
+const singlesRatings = ["1人目のレーティング", "2人目のレーティング"];
+const doublesRatings = [
+  "チーム1の1人目のレーティング",
+  "チーム1の2人目のレーティング",
+  "チーム2の1人目のレーティング",
+  "チーム2の2人目のレーティング"
+];
+ 
+function addHandicapOptions(subcommand, ratingDescriptions) {
+  subcommand.addStringOption(option =>
+    option
+      .setName("game")
+      .setDescription("ゲームの種類")
+      .setRequired(true)
+      .addChoices(
+        ...handicapGames.map(game => ({ name: game, value: game }))
+      )
+  );
+ 
+  ratingDescriptions.forEach((description, i) => {
+    subcommand.addNumberOption(option =>
+      option
+        .setName(`rating${i + 1}`)
+        .setDescription(description)
+        .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(19)
+    );
+  });
+ 
+  return subcommand;
+}
+
+const handicap = new SlashCommandBuilder()
+  .setName("handicap")
+  .setDescription("DARTSLIVEのハンデを計算します")
+  .addSubcommandGroup(group =>
+    group
+      .setName("dl1")
+      .setDescription("DARTSLIVEハンデ")
+      .addSubcommand(subcommand =>
+        addHandicapOptions(
+          subcommand.setName("singles").setDescription("シングルス"),
+          singlesRatings
+        )
+      )
+      .addSubcommand(subcommand =>
+        addHandicapOptions(
+          subcommand.setName("doubles").setDescription("ダブルス"),
+          doublesRatings
+        )
+      )
+  )
+  .addSubcommand(subcommand =>
+    addHandicapOptions(
+      subcommand.setName("dl2").setDescription("DARTSLIVE2ハンデ"),
+      singlesRatings
+    )
+  )
+  .setIntegrationTypes(
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  )
+  .setContexts(
+    InteractionContextType.Guild,
+    InteractionContextType.BotDM,
+    InteractionContextType.PrivateChannel
+  );
 
 const rest = new REST({ version: "10" }).setToken(TOKEN);
 
@@ -1338,6 +1265,88 @@ client.on("interactionCreate", async interaction => {
       })
     }
 
+    await interaction.reply({
+      embeds: [embed]
+    });
+  } else if (interaction.commandName === "handicap") {
+    const group = interaction.options.getSubcommandGroup(false);
+    const subcommand = interaction.options.getSubcommand();
+    const mode = group === "dl1" ? `dartslive-${subcommand}` : "dartslive2";
+    const game = interaction.options.getString("game", true);
+    const isDoubles = mode === "dartslive-doubles";
+    const ratings = Array.from(
+      { length: isDoubles ? 4 : 2 },
+      (_, i) => interaction.options.getNumber(`rating${i + 1}`, true)
+    );
+ 
+    let result;
+    if (group === "dl1") {
+      if (isDoubles) {
+        if (game === "cricket") {
+          
+        }
+      }
+    }
+ 
+    if (!result.ok) {
+      await interaction.reply({
+        content: result.reason,
+        flags: MessageFlags.Ephemeral
+      });
+      return;
+    }
+ 
+    // ダブルスは「チーム1 / チーム2」、それ以外は「1人目 / 2人目」と表示する
+    const label = n => (mode === "dartslive-doubles" ? `チーム${n}` : `${n}人目`);
+ 
+    const lowerText =
+      result.lowerSide === 0
+        ? "レーティングの整数部が同じなので、ハンデはありません。"
+        : `${label(result.lowerSide)}(レーティングが低い側)`;
+ 
+    const ratingLines = isDoubles
+      ? [
+          `${label(1)}: ${ratings[0]} + ${ratings[1]} = ${result.total1}`,
+          `${label(2)}: ${ratings[2]} + ${ratings[3]} = ${result.total2}`
+        ]
+      : [
+          `${label(1)}: ${ratings[0]}`,
+          `${label(2)}: ${ratings[1]}`
+        ];
+    const ratingText =
+      `${ratingLines.join("\n")}\n` +
+      `差: ${result.diff.toFixed(2)}(ハンデの判定に使う差: ${result.steps})`;
+ 
+    const embed = new EmbedBuilder()
+      .setColor(0x2e7d32)
+      .setTitle(`ハンデ ${result.handicap}${result.unit}`)
+      .addFields(
+        {
+          name: "ゲームオプション",
+          value: `${MODE_LABELS[mode]} / ${game}`,
+          inline: false
+        },
+        {
+          name: "レーティング",
+          value: ratingText,
+          inline: false
+        },
+        {
+          name: "ハンデの対象",
+          value: lowerText,
+          inline: false
+        },
+        {
+          name: "開始点",
+          value: `${label(1)}: ${result.start1} / ${label(2)}: ${result.start2}`,
+          inline: false
+        }
+      );
+ 
+    if (result.note) {
+      embed.setFooter({ text: result.note });
+    }
+ 
     await interaction.reply({
       embeds: [embed]
     });
