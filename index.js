@@ -11,7 +11,11 @@ const {
   ApplicationIntegrationType,
   InteractionContextType
 } = require("discord.js");
-const dlhandicap = require("./handicap.json");
+const {
+  loadHandicapData,
+  listGames,
+  calculateHandicap
+} = require("./handicap");
 
 const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
@@ -1284,10 +1288,14 @@ client.on("interactionCreate", async interaction => {
     await interaction.reply({
       embeds: [embed]
     });
-  /*} else if (interaction.commandName === "handicap") {
-    const group = interaction.options.getSubcommandGroup(false);
-    const subcommand = interaction.options.getSubcommand();
-    const mode = group === "dl1" ? `dartslive-${subcommand}` : "dartslive2";
+  /*} else if (
+    interaction.commandName === "dl1handicap" ||
+    interaction.commandName === "dl2handicap"
+  ) {
+    const mode =
+      interaction.commandName === "dl2handicap"
+        ? "dartslive2"
+        : `dartslive-${interaction.options.getSubcommand()}`;
     const game = interaction.options.getString("game", true);
     const isDoubles = mode === "dartslive-doubles";
     const ratings = Array.from(
@@ -1295,14 +1303,12 @@ client.on("interactionCreate", async interaction => {
       (_, i) => interaction.options.getNumber(`rating${i + 1}`, true)
     );
  
-    let result;
-    if (group === "dl1") {
-      if (isDoubles) {
-        if (game === "cricket") {
-          
-        }
-      }
-    }
+    const result = calculateHandicap(
+      mode,
+      game,
+      isDoubles ? [ratings[0], ratings[1]] : ratings[0],
+      isDoubles ? [ratings[2], ratings[3]] : ratings[1]
+    );
  
     if (!result.ok) {
       await interaction.reply({
@@ -1317,7 +1323,7 @@ client.on("interactionCreate", async interaction => {
  
     const lowerText =
       result.lowerSide === 0
-        ? "レーティングの整数部が同じなので、ハンデはありません。"
+        ? "ハンデなし"
         : `${label(result.lowerSide)}(レーティングが低い側)`;
  
     const ratingLines = isDoubles
@@ -1332,6 +1338,7 @@ client.on("interactionCreate", async interaction => {
     const ratingText =
       `${ratingLines.join("\n")}\n` +
       `差: ${result.diff.toFixed(2)}(ハンデの判定に使う差: ${result.steps})`;
+      
  
     const embed = new EmbedBuilder()
       .setColor(0x2e7d32)
