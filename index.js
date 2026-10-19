@@ -1094,7 +1094,7 @@ const dl1handicap = new SlashCommandBuilder()
   .addSubcommand(subcommand =>
     addHandicapOptions(
       subcommand.setName("doubles").setDescription("ダブルス"),
-      doublesRatins
+      doublesRatings
     )
   )
   .setIntegrationTypes(
