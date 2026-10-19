@@ -7,7 +7,9 @@ const {
   Routes,
   SlashCommandBuilder,
   EmbedBuilder,
-  MessageFlags
+  MessageFlags,
+  ApplicationIntegrationType,
+  InteractionContextType
 } = require("discord.js");
 const dlhandicap = require("./handicap.json");
 
@@ -1086,13 +1088,13 @@ const dl1handicap = new SlashCommandBuilder()
   .addSubcommand(subcommand =>
     addHandicapOptions(
       subcommand.setName("singles").setDescription("シングルス"),
-      SINGLES_RATINGS
+      siglesRatings
     )
   )
   .addSubcommand(subcommand =>
     addHandicapOptions(
       subcommand.setName("doubles").setDescription("ダブルス"),
-      DOUBLES_RATINGS
+      doublesRatins
     )
   )
   .setIntegrationTypes(
@@ -1111,13 +1113,13 @@ const dl2handicap = new SlashCommandBuilder()
   .addSubcommand(subcommand =>
     addHandicapOptions(
       subcommand.setName("singles").setDescription("シングルス"),
-      SINGLES_RATINGS
+      singlesRatings
     )
   )
   .addSubcommand(subcommand =>
     addHandicapOptions(
       subcommand.setName("doubles").setDescription("ダブルス"),
-      DOUBLES_RATINGS
+      doublesRatings
     )
   )
   .setIntegrationTypes(
