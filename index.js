@@ -1088,7 +1088,7 @@ const dl1handicap = new SlashCommandBuilder()
   .addSubcommand(subcommand =>
     addHandicapOptions(
       subcommand.setName("singles").setDescription("シングルス"),
-      siglesRatings
+      singlesRatings
     )
   )
   .addSubcommand(subcommand =>
