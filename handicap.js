@@ -77,37 +77,6 @@ function loadHandicapData() {
   return data;
 }
 
-// コマンドの選択肢に出すゲーム名("301"、"501" など)
-function listGames(data) {
-  const games = GAMES_01.filter(game => data.dartslive2?.[game]);
-
-  if (data.dartslive2?.cricket && data.dartslive?.cricket) {
-    games.push("cricket");
-  }
-
-  return games;
-}
-
-function fail(reason) {
-  return { ok: false, reason };
-}
-
-function getTable(data, mode, game) {
-  if (mode === "dartslive2") {
-    return data.dartslive2?.[game];
-  }
-
-  if (mode === "dartslive-singles") {
-    return data.dartslive?.singles?.[game];
-  }
-
-  if (mode === "dartslive-doubles") {
-    return data.dartslive?.doubles?.[game];
-  }
-
-  return undefined;
-}
-
 // クリケットの表の1行: [18のマーク数, 17のマーク数, 16のマーク数, 15のマーク数, 持ち点数]
 const CRICKET_NUMBERS = [18, 17, 16, 15];
 
@@ -137,7 +106,8 @@ const sum = list => list.reduce((total, value) => total + value, 0);
  * レーティングは、カードに表示される整数部(切り捨て)で判定する(1人ずつ切り捨ててから合計)。
  * start1 / start2 は、1人目(チーム1)・2人目(チーム2)の開始点。
  */
-function calculateHandicap(data, mode, game, side1, side2) {
+function calculateHandicap(mode, game, side1, side2) {
+  const data = loadHandicapData();
   if (!MODE_LABELS[mode]) {
     return fail("ハンデの種類が正しくありません。");
   }
