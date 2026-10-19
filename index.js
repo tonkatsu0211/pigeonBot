@@ -1080,30 +1080,44 @@ function addHandicapOptions(subcommand, ratingDescriptions) {
   return subcommand;
 }
 
-const handicap = new SlashCommandBuilder()
-  .setName("handicap")
-  .setDescription("DARTSLIVEのハンデを計算します")
-  .addSubcommandGroup(group =>
-    group
-      .setName("dl1")
-      .setDescription("DARTSLIVEハンデ")
-      .addSubcommand(subcommand =>
-        addHandicapOptions(
-          subcommand.setName("singles").setDescription("シングルス"),
-          singlesRatings
-        )
-      )
-      .addSubcommand(subcommand =>
-        addHandicapOptions(
-          subcommand.setName("doubles").setDescription("ダブルス"),
-          doublesRatings
-        )
-      )
+const dl1handicap = new SlashCommandBuilder()
+  .setName("dl1handicap")
+  .setDescription("DARTSLIVE のオートハンディキャップを計算します")
+  .addSubcommand(subcommand =>
+    addHandicapOptions(
+      subcommand.setName("singles").setDescription("シングルス"),
+      SINGLES_RATINGS
+    )
   )
   .addSubcommand(subcommand =>
     addHandicapOptions(
-      subcommand.setName("dl2").setDescription("DARTSLIVE2ハンデ"),
-      singlesRatings
+      subcommand.setName("doubles").setDescription("ダブルス"),
+      DOUBLES_RATINGS
+    )
+  )
+  .setIntegrationTypes(
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  )
+  .setContexts(
+    InteractionContextType.Guild,
+    InteractionContextType.BotDM,
+    InteractionContextType.PrivateChannel
+  );
+
+const dl2handicap = new SlashCommandBuilder()
+  .setName("dl2handicap")
+  .setDescription("DARTSLIVE2 のオートハンディキャップを計算します")
+  .addSubcommand(subcommand =>
+    addHandicapOptions(
+      subcommand.setName("singles").setDescription("シングルス"),
+      SINGLES_RATINGS
+    )
+  )
+  .addSubcommand(subcommand =>
+    addHandicapOptions(
+      subcommand.setName("doubles").setDescription("ダブルス"),
+      DOUBLES_RATINGS
     )
   )
   .setIntegrationTypes(
@@ -1268,7 +1282,7 @@ client.on("interactionCreate", async interaction => {
     await interaction.reply({
       embeds: [embed]
     });
-  } else if (interaction.commandName === "handicap") {
+  /*} else if (interaction.commandName === "handicap") {
     const group = interaction.options.getSubcommandGroup(false);
     const subcommand = interaction.options.getSubcommand();
     const mode = group === "dl1" ? `dartslive-${subcommand}` : "dartslive2";
@@ -1349,7 +1363,7 @@ client.on("interactionCreate", async interaction => {
  
     await interaction.reply({
       embeds: [embed]
-    });
+    });*/
   } else if (interaction.commandName === "help") {
     const embed = new EmbedBuilder()
       .setColor(0x00aaff)
