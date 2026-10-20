@@ -957,7 +957,7 @@ const finish = new SlashCommandBuilder()
       .setName("score")
       .setDescription("残り点数")
       .setRequired(true)
-      .setMinValue(2)
+      .setMinValue(1)
       .setMaxValue(180)
   )
   .addStringOption(option =>
@@ -1241,17 +1241,17 @@ client.on("interactionCreate", async interaction => {
       : 0;
     const rolls = [];
 
-    if (count > 100 || count < 1) {
+    if (count > 10000 || count < 1) {
       await interaction.reply({
-        content: "diceの個数は1〜100個にしてください",
+        content: "diceの個数は1〜10000個にしてください",
         flags: MessageFlags.Ephemeral
       });
    
       return;
     }
-    if (sides > 500 || sides < 3) {
+    if (sides > 1000000 || sides < 1) {
       await interaction.reply({
-        content: "diceの面数は3〜500にしてください",
+        content: "diceの面数は1〜1000000にしてください",
         flags: MessageFlags.Ephemeral
       });
 
