@@ -8,13 +8,6 @@ const path = require("path");
 
 const DATA_PATH = path.join(__dirname, "handicap.json");
 
-// コマンドの形: /handicap dl1 singles、/handicap dl1 doubles、/handicap dl2
-const MODE_LABELS = {
-  dartslive2: "AUTO(DARTSLIVE2)",
-  "dartslive-singles": "AUTO(DARTSLIVE) シングルス",
-  "dartslive-doubles": "AUTO(DARTSLIVE) ダブルス"
-};
-
 const GAMES_01 = ["301", "501", "701", "901", "1101", "1501"];
 
 function validateTable(label, table) {
@@ -222,4 +215,4 @@ function calculateHandicap(mode, game, side1, side2) {
   };
 }
 
-module.exports = { MODE_LABELS, loadHandicapData, listGames, calculateHandicap };
+module.exports = { calculateHandicap };
