@@ -1272,13 +1272,14 @@ client.on("interactionCreate", async interaction => {
       modifier;
     const rollText = rolls.join(", ");
 
+    let success = false;
+    if (isDD) success = rolls[0] <= target;
+
     const embed = new EmbedBuilder()
       .setColor(isDD && !success ? 0xff0000 : 0x00ff00)
       .setTitle(diceType);
     
     if (isDD) {
-      const success = rolls[0] <= target;
-    
       embed.addFields({
         name: "結果",
         value: `${rolls[0]}（${success ? "成功" : "失敗"}）`,
