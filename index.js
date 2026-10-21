@@ -1225,20 +1225,23 @@ client.on("interactionCreate", async interaction => {
       embeds: [embed]
     });
   } else if (interaction.commandName === "dice") {
-    const diceType = interaction.options.getString("dice", true);
+    const diceType = interaction.options.getString("dice", true).trim();
+    const ddMatch = diceType.match(/^dd(\d+)$/i);
     const match = diceType.match(/^(\d+)d(\d+)([+-]\d+)?$/i);
-    if (!match) {
+    
+    if (!ddMatch && !match) {
       await interaction.reply({
         content: "diceの値が不正です",
         flags: MessageFlags.Ephemeral
       });
       return;
     }
-    const count = Number(match[1]);
-    const sides = Number(match[2]);
-    const modifier = match[3]
-      ? Number(match[3])
-      : 0;
+    
+    const isDD = Boolean(ddMatch);
+    const target = isDD ? Number(ddMatch[1]) : 0;
+    const count = isDD ? 1 : Number(match[1]);
+    const sides = isDD ? 100 : Number(match[2]);
+    const modifier = !isDD && match[3] ? Number(match[3]) : 0;
     const rolls = [];
 
     if (count > 10000 || count < 1) {
@@ -1271,20 +1274,32 @@ client.on("interactionCreate", async interaction => {
 
     const embed = new EmbedBuilder()
       .setColor(0x00ff00)
-      .setTitle(diceType)
-      .addFields({
+      .setTitle(diceType);
+    
+    if (isDD) {
+      const success = rolls[0] <= target;
+    
+      embed.addFields({
+        name: "結果",
+        value: `${rolls[0]}（${success ? "成功" : "失敗"}）`,
+        inline: true
+      });
+    } else {
+      embed.addFields({
         name: "結果",
         value: count === 1 ? String(total) : rollText,
         inline: true
       });
-    if (count > 1) {
-      embed.addFields({
-        name: "合計",
-        value: String(total),
-        inline: true
-      })
+    
+      if (count > 1) {
+        embed.addFields({
+          name: "合計",
+          value: String(total),
+          inline: true
+        });
+      }
     }
-
+    
     await interaction.reply({
       embeds: [embed]
     });
