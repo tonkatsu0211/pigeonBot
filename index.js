@@ -21,7 +21,7 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v1.1.11");
+console.log("ぽっぽ v1.2.0");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
@@ -1012,7 +1012,7 @@ const dice = new SlashCommandBuilder()
   .addStringOption(option =>
     option
       .setName("dice")
-      .setDescription("サイコロの種類(例: 1d6, 1d100)")
+      .setDescription("サイコロの種類(例: 1d6, 1d100, dd60)")
       .setRequired(true)
   )
   .setIntegrationTypes(
@@ -1273,7 +1273,7 @@ client.on("interactionCreate", async interaction => {
     const rollText = rolls.join(", ");
 
     const embed = new EmbedBuilder()
-      .setColor(0x00ff00)
+      .setColor(isDD && !success ? 0xff0000 : 0x00ff00)
       .setTitle(diceType);
     
     if (isDD) {
