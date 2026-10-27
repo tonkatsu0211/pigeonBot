@@ -21,7 +21,7 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
-console.log("ぽっぽ v1.2.0");
+console.log("ぽっぽ v1.2.1");
 
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
@@ -1415,16 +1415,23 @@ client.on("interactionCreate", async interaction => {
 
 client.on("messageCreate", async message => {
   if (message.author.bot) return;
-  
-  if (message.content.includes("ぽっぽ") || message.content.includes("鳩")) {
-    console.log("ぽっぽ検出");
+
+  if ((message.content.includes("ぽっぽ") || message.content.includes("鳩")) && message.content.includes("うゆゆ")) {
+    console.log("ぽっぽ&うゆゆ検出");
     await message.react("<:pigeon_af:1557656470420594770>");
-    await message.reply("ぽっぽ<:pigeon_af:1557656470420594770>");
-  }
-  if (message.content.includes("うゆゆ")) {
-    console.log("うゆゆ検出");
     await message.react("<:uyuyu:1557651030966149180>");
-    await message.reply("うゆゆ<:uyuyu:1557651030966149180>");
+    await message.reply("ぽっぽうゆゆ<:pigeon_af:1557656470420594770><:uyuyu:1557651030966149180>");
+  } else {
+    if (message.content.includes("ぽっぽ") || message.content.includes("鳩")) {
+      console.log("ぽっぽ検出");
+      await message.react("<:pigeon_af:1557656470420594770>");
+      await message.reply("ぽっぽ<:pigeon_af:1557656470420594770>");
+    }
+    if (message.content.includes("うゆゆ")) {
+      console.log("うゆゆ検出");
+      await message.react("<:uyuyu:1557651030966149180>");
+      await message.reply("うゆゆ<:uyuyu:1557651030966149180>");
+    }
   }
 });
 
