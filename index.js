@@ -1429,10 +1429,9 @@ client.on("messageCreate", async message => {
       { index: poppoIdx, text: "ぽっぽ", emoji: "<:pigeon_af:1557656470420594770>" },
       { index: uyuyuIdx, text: "うゆゆ", emoji: "<:uyuyu:1557651030966149180>" },
     ].sort((a, b) => a.index - b.index);
-  
-    for (const item of items) {
-      await message.react(item.emoji);
-    }
+
+    const reactions = items.map((i) => message.react(i.emoji));
+    await Promise.all(reactions);
   
     await message.reply(
       items.map((i) => i.text).join("") + items.map((i) => i.emoji).join("")
