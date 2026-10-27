@@ -1418,9 +1418,25 @@ client.on("messageCreate", async message => {
 
   if ((message.content.includes("ぽっぽ") || message.content.includes("鳩")) && message.content.includes("うゆゆ")) {
     console.log("ぽっぽ&うゆゆ検出");
-    await message.react("<:pigeon_af:1557656470420594770>");
-    await message.react("<:uyuyu:1557651030966149180>");
-    await message.reply("ぽっぽうゆゆ<:pigeon_af:1557656470420594770><:uyuyu:1557651030966149180>");
+    const content = message.content;
+    
+    const poppoIdx = Math.min(
+      ...[content.indexOf("ぽっぽ"), content.indexOf("鳩")].filter((i) => i !== -1)
+    );
+    const uyuyuIdx = content.indexOf("うゆゆ");
+  
+    const items = [
+      { index: poppoIdx, text: "ぽっぽ", emoji: "<:pigeon_af:1557656470420594770>" },
+      { index: uyuyuIdx, text: "うゆゆ", emoji: "<:uyuyu:1557651030966149180>" },
+    ].sort((a, b) => a.index - b.index);
+  
+    for (const item of items) {
+      await message.react(item.emoji);
+    }
+  
+    await message.reply(
+      items.map((i) => i.text).join("") + items.map((i) => i.emoji).join("")
+    );
   } else {
     if (message.content.includes("ぽっぽ") || message.content.includes("鳩")) {
       console.log("ぽっぽ検出");
