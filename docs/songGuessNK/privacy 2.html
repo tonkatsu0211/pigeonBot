@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>プライバシーポリシー | songGuessNK</title><style>
+:root{--bg:#fbfaf7;--fg:#22262b;--mute:#5d6671;--line:#d9dde1;--ac:#2b6b6f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1f23;--fg:#e6e8ea;--mute:#98a1ab;--line:#33393f;--ac:#6fc0c4}}
+*{box-sizing:border-box}html{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.85 "Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:46rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+nav{display:flex;gap:1.25rem;font-size:.9rem;margin-bottom:2.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--line)}
+nav a{color:var(--mute);text-decoration:none}nav a[aria-current]{color:var(--fg);font-weight:700}
+a{color:var(--ac)}a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+h1{font-size:1.9rem;line-height:1.35;margin:0 0 .5rem}
+h2{font-size:1.15rem;margin:2.5rem 0 .5rem;padding-left:.7rem;border-left:4px solid var(--ac)}
+.meta{color:var(--mute);font-size:.9rem;margin:0 0 2rem}
+ul,ol{padding-left:1.4rem}li{margin:.3rem 0}
+code{font-family:ui-monospace,monospace}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--mute);font-size:.85rem}
+</style></head><body><main>
+<nav><a href="index.html">songGuessNK</a><a href="terms.html">利用規約</a><a href="privacy.html" aria-current="page">プライバシーポリシー</a></nav>
+<h1>プライバシーポリシー</h1>
+<p class="meta">最終更新日: 2026年10月29日</p>
+<p>tonkatsu0211(以下「運営者」)は、Discord Bot「songGuessNK」(以下「本Bot」)における、利用者の情報の取り扱いを次のとおり定めます。</p>
+
+<h2>1. 取得する情報</h2>
+<p>本Botは、機能を提供するために、Discordから次の情報を受け取ります。</p>
+<ul>
+<li><strong>スラッシュコマンドの入力内容</strong>: <code>/quiz</code> で出題者が入力した曲名など</li>
+<li><strong>メッセージの内容</strong>: 本Botが閲覧できるチャンネルに投稿されたメッセージ(Botによる投稿を除く)。<code>sg_</code>、<code>sg!open</code>、<code>sg!leaderboard</code> で始まるかどうかを確認するために、メッセージ本文を読み取ります。</li>
+<li>上記に付随して、Discordが提供する投稿者(ユーザーID)・サーバー(サーバーID)・チャンネル(チャンネルID)の識別情報</li>
+</ul>
+<p>本Botは、メールアドレス、IPアドレス、位置情報、決済情報などは取得しません。</p>
+
+<h2>2. 利用目的</h2>
+<ul>
+<li>クイズの出題・進行(回答の判定、文字の公開、回答制限の管理)</li>
+<li>得点の集計と、ランキングの表示</li>
+<li>コマンドに対する応答(ヘルプの表示、応答速度の表示)</li>
+<li>不具合の調査、不正利用の防止、本Botの運営</li>
+</ul>
+<p>上記以外の目的で情報を使用しません。</p>
+
+<h2>3. 情報の保存</h2>
+<p>本Botは、次の情報をデータベースに保存します。</p>
+<ul>
+<li><strong>得点</strong>: サーバーID、ユーザーID、累計の得点。ランキングの表示のため、継続して保存します。</li>
+<li><strong>進行中のクイズの状態</strong>: チャンネルID、出題者のユーザーID、出題された曲名、公開済みの文字、回答の制限の状態。本Botが再起動してもクイズを続けられるようにするためのもので、クイズが終了すると削除します。</li>
+</ul>
+<p><code>sg_</code>、<code>sg!open</code>、<code>sg!leaderboard</code> で始まるメッセージ以外の内容は、判定のために読み取った後、保存せずに破棄します。回答の内容(<code>sg_</code> に続く文字列)も、正誤の判定にだけ使い、保存しません。</p>
+<p>運営者の管理するサーバーの実行ログには、動作確認や不具合調査のため、コマンドの実行やエラーなどが記録されることがあります。メッセージの本文や投稿者の情報を意図して記録することはありません。</p>
+
+<h2>4. 第三者への提供</h2>
+<p>運営者は、法令に基づく場合を除き、取得した情報を第三者に販売、提供、共有しません。</p>
+<p>ただし、本Botの運用のため、データの保存先として、運営者が契約するデータベースおよびサーバーの提供事業者のサービスを利用します。保存した情報は、これらの事業者の設備に保管されます。また、本BotはDiscordのサービス上で動作するため、Discordが各自のプライバシーポリシーに基づいて情報を取り扱います。詳しくは<a href="https://discord.com/privacy">Discordのプライバシーポリシー</a>をご確認ください。</p>
+
+<h2>5. 安全管理</h2>
+<p>運営者は、Botのトークンやデータベースの接続情報などの認証情報を適切に管理し、情報の漏えいや不正アクセスの防止に努めます。</p>
+
+<h2>6. 読み取りの停止・情報の削除</h2>
+<p>メッセージの読み取りを止めたい場合は、サーバーの管理者が本Botのチャンネル閲覧権限を外すか、本Botをサーバーから退出させてください。ただし、サーバーから退出させても、得点のデータは残ります。</p>
+<p>得点など、保存されている情報の削除を希望する場合は、下記の連絡先までご連絡ください。GitHubのIssuesは誰でも閲覧できるため、最初の連絡では、用件のみを書いてください。ユーザーIDなどの確認が必要な場合は、運営者から連絡方法をご案内します。</p>
+
+<h2>7. 未成年の利用</h2>
+<p>本Botは、Discordの年齢要件を満たす方のみが利用できます。</p>
+
+<h2>8. ポリシーの変更</h2>
+<p>運営者は、必要に応じて本ポリシーを変更します。変更後の内容は、本ページに掲載した時点で効力を生じます。</p>
+
+<h2>9. お問い合わせ</h2>
+<p>情報の取り扱いに関するお問い合わせは、<a href="https://github.com/tonkatsu0211/songGuessNK/issues">GitHubのIssues</a>からお願いします。</p>
+<footer>© 2026 tonkatsu0211</footer>
+</main></body></html>
