@@ -16,7 +16,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 </style></head><body><main>
 <nav><a href="../index.html">Bot一覧</a><a href="index.html">songGuessNK</a><a href="terms.html">利用規約</a><a href="privacy.html" aria-current="page">プライバシーポリシー</a></nav>
 <h1>プライバシーポリシー</h1>
-<p class="meta">最終更新日: 2026年10月29日</p>
+<p class="meta">最終更新日: 2026年11月5日</p>
 <p>tonkatsu0211(以下「運営者」)は、Discord Bot「songGuessNK」(以下「本Bot」)における、利用者の情報の取り扱いを次のとおり定めます。</p>
 
 <h2>1. 取得する情報</h2>
@@ -30,7 +30,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 
 <h2>2. 利用目的</h2>
 <ul>
-<li>クイズの出題・進行(回答の判定、文字の公開、回答制限の管理)</li>
+<li>クイズの出題・進行(回答の判定、文字の公開、回答制限の管理)、および同じ曲名の重複した出題の防止</li>
 <li>得点の集計と、ランキングの表示</li>
 <li>コマンドに対する応答(ヘルプの表示、応答速度の表示)</li>
 <li>不具合の調査、不正利用の防止、本Botの運営</li>
@@ -42,6 +42,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 <ul>
 <li><strong>得点</strong>: サーバーID、ユーザーID、累計の得点。ランキングの表示のため、継続して保存します。</li>
 <li><strong>進行中のクイズの状態</strong>: チャンネルID、出題者のユーザーID、出題された曲名、公開済みの文字、回答の制限の状態。本Botが再起動してもクイズを続けられるようにするためのもので、クイズが終了すると削除します。</li>
+<li><strong>出題済みの曲名</strong>: サーバーIDと、出題された曲名(大文字と小文字、全角と半角、スペースの違いをなくした形)。同じサーバーで同じ曲名が再び出題されないようにするため、クイズが終了した後も保存します。出題者がクイズを強制終了した場合は、その曲名の記録を削除します。出題者のユーザーIDとは、結びつけて保存しません。</li>
 </ul>
 <p><code>sg_</code>、<code>sg!open</code>、<code>sg!leaderboard</code> で始まるメッセージ以外の内容は、判定のために読み取った後、保存せずに破棄します。回答の内容(<code>sg_</code> に続く文字列)も、正誤の判定にだけ使い、保存しません。</p>
 <p>運営者の管理するサーバーの実行ログには、動作確認や不具合調査のため、コマンドの実行やエラーなどが記録されることがあります。メッセージの本文や投稿者の情報を意図して記録することはありません。</p>
