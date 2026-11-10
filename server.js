@@ -48,6 +48,24 @@ async function isDir(p) {
   }
 }
 
+async function resolveCaseInsensitive(p) {
+  const segments = path.relative(ROOT, p).split(path.sep).filter(Boolean);
+  let current = ROOT;
+
+  for (const segment of segments) {
+    if (!(await isDir(current))) return null;
+
+    const entries = await fsp.readdir(current);
+    const actual = entries.find(name => name.toLowerCase() === segment.toLowerCase());
+
+    if (!actual) return null;
+
+    current = path.join(current, actual);
+  }
+
+  return current;
+}
+
 // URLのパスを、配信するファイル(またはリダイレクト・エラー)に変換する
 async function resolve(pathname) {
   const segments = pathname.split("/").filter(Boolean);
@@ -55,7 +73,10 @@ async function resolve(pathname) {
   // .git や .env など、ドットで始まるものは配信しない(".." もここで弾く)
   if (segments.some(s => s.startsWith("."))) return { status: 404 };
 
-  const target = path.join(ROOT, ...segments);
+  const requestedTarget = path.join(ROOT, ...segments);
+  const target = await resolveCaseInsensitive(requestedTarget);
+  
+  if (!target) return { status: 404 };
 
   // docs フォルダの外は読ませない
   if (target !== ROOT && !target.startsWith(ROOT + path.sep)) {
