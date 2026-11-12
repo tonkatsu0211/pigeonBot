@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://あなたのドメイン/</loc>
+  </url>
+  <url>
+    <loc>https://あなたのドメイン/pigeonBot/</loc>
+  </url>
+  <url>
+    <loc>https://あなたのドメイン/pigeonBot/terms</loc>
+  </url>
+  <url>
+    <loc>https://あなたのドメイン/pigeonBot/privacy</loc>
+  </url>
+  <url>
+    <loc>https://あなたのドメイン/songGuessNK/</loc>
+  </url>
+  <url>
+    <loc>https://あなたのドメイン/songGuessNK/terms</loc>
+  </url>
+  <url>
+    <loc>https://あなたのドメイン/songGuessNK/privacy</loc>
+  </url>
+</urlset>
