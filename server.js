@@ -1,10 +1,4 @@
 // 利用規約・プライバシーポリシーを配信する小さな静的サーバー(依存パッケージなし)
-//
-// docs フォルダの構成と、対応するURL:
-//   docs/index.html              → /                    (Bot一覧)
-//   docs/<bot名>/index.html      → /<bot名>/
-//   docs/<bot名>/terms.html      → /<bot名>/terms       (.html付きでも可)
-//   docs/<bot名>/privacy.html    → /<bot名>/privacy     (.html付きでも可)
 // botを増やすときは、docs に新しいフォルダを足すだけで、このファイルの変更は不要です。
 const http = require("http");
 const fs = require("fs");
