@@ -20,7 +20,8 @@ const TYPES = {
   ".txt": "text/plain; charset=utf-8",
   ".ico": "image/x-icon",
   ".png": "image/png",
-  ".svg": "image/svg+xml"
+  ".svg": "image/svg+xml",
+  ".xml": "application/xml; charset=utf-8"
 };
 
 // botが1つだけだった頃の旧URL(/terms など)は、pigeonBot のページへ転送する。
