@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://あなたのドメイン/</loc>
+    <loc>https://bot.tonkatsu.f5.si/</loc>
   </url>
   <url>
-    <loc>https://あなたのドメイン/pigeonBot/</loc>
+    <loc>https://bot.tonkatsu.f5.si/pigeonBot/</loc>
   </url>
   <url>
-    <loc>https://あなたのドメイン/pigeonBot/terms</loc>
+    <loc>https://bot.tonkatsu.f5.si/pigeonBot/terms</loc>
   </url>
   <url>
-    <loc>https://あなたのドメイン/pigeonBot/privacy</loc>
+    <loc>https://bot.tonkatsu.f5.si/pigeonBot/privacy</loc>
   </url>
   <url>
-    <loc>https://あなたのドメイン/songGuessNK/</loc>
+    <loc>https://bot.tonkatsu.f5.si/songGuessNK/</loc>
   </url>
   <url>
-    <loc>https://あなたのドメイン/songGuessNK/terms</loc>
+    <loc>https://bot.tonkatsu.f5.si/songGuessNK/terms</loc>
   </url>
   <url>
-    <loc>https://あなたのドメイン/songGuessNK/privacy</loc>
+    <loc>https://bot.tonkatsu.f5.si/songGuessNK/privacy</loc>
   </url>
 </urlset>
