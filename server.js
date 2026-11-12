@@ -24,15 +24,6 @@ const TYPES = {
   ".xml": "application/xml; charset=utf-8"
 };
 
-// botが1つだけだった頃の旧URL(/terms など)は、pigeonBot のページへ転送する。
-// すでにDiscordなどに登録済みのURLが、リンク切れにならないようにするため。
-const LEGACY_REDIRECTS = {
-  "/terms": "/pigeonBot/terms",
-  "/terms.html": "/pigeonBot/terms",
-  "/privacy": "/pigeonBot/privacy",
-  "/privacy.html": "/pigeonBot/privacy"
-};
-
 async function isFile(p) {
   try {
     return (await fsp.stat(p)).isFile();
@@ -122,11 +113,6 @@ const server = http.createServer(async (req, res) => {
   if (pathname === "/healthz") {
     res.writeHead(200, { "Content-Type": "text/plain" });
     return res.end("ok");
-  }
-
-  if (LEGACY_REDIRECTS[pathname]) {
-    res.writeHead(301, { Location: LEGACY_REDIRECTS[pathname] + url.search });
-    return res.end();
   }
 
   try {
