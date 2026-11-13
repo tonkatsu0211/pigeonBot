@@ -23,6 +23,14 @@ const GUILD_ID = process.env.DISCORD_GUILD_ID;
 
 console.log("ぽっぽ v1.2.1");
 
+let lastTick = Date.now();
+setInterval(() => {
+  const now = Date.now();
+  const lag = now - lastTick - 1000;
+  if (lag > 500) console.warn(`[event loop lag] ${lag}ms`);
+  lastTick = now;
+}, 1000);
+
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("DISCORD_TOKEN と DISCORD_CLIENT_ID を設定してください。");
 }
