@@ -1138,6 +1138,11 @@ const dl2handicap = new SlashCommandBuilder()
 
 const rest = new REST({ version: "10" }).setToken(TOKEN);
 
+process.on("unhandledRejection", error => {
+  console.error("unhandledRejection:", error);
+});
+client.on("error", error => console.error("client error:", error));
+
 async function registerCommands() {
   if (GUILD_ID) {
     await rest.put(
