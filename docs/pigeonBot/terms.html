@@ -15,7 +15,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 </style></head><body><main>
 <nav><a href="../index.html">Bot一覧</a><a href="index.html">pigeonBot</a><a href="terms.html" aria-current="page">利用規約</a><a href="privacy.html">プライバシーポリシー</a></nav>
 <h1>利用規約</h1>
-<p class="meta">最終更新日: 2026年10月8日</p>
+<p class="meta">最終更新日: 2026年10月19日</p>
 <p>この利用規約(以下「本規約」)は、tonkatsu0211(以下「運営者」)が提供するDiscord Bot「ぽっぽ」(リポジトリ名: pigeonBot。以下「本Bot」)の利用条件を定めるものです。本Botをサーバーに招待した方、または本Botの機能を利用した方は、本規約に同意したものとみなします。</p>
 
 <h2>第1条(本Botについて)</h2>
@@ -66,6 +66,34 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 <p>本規約は日本法に準拠します。</p>
 
 <h2>お問い合わせ</h2>
-<p>本Botに関するお問い合わせは、<a href="https://github.com/tonkatsu0211/pigeonBot/issues">GitHubのIssues</a>からお願いします。</p>
+<p>本Botに関するお問い合わせは、<a href="https://github.com/tonkatsu0211/pigeonBot/issues">GitHubのIssues</a>、または<a href="#" onclick="sendMail()">pigeonbot@tonkatsu.f5.si</a>へお願いします。</p>
 <footer>© 2026 tonkatsu0211</footer>
-</main></body></html>
+</main></body><script>
+  function sendMail() {
+    const email = "pigeonbot@tonkatsu.f5.si";
+    const subject = "ぽっぽに関する問い合わせ";
+  
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+    const webFallback = `https://outlook.office.com/mail/0/deeplink/compose?to=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}`;
+  
+    let switched = false;
+  
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        switched = true;
+      }
+    };
+  
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+  
+    window.location.href = mailtoLink;
+  
+    setTimeout(() => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  
+      if (!switched) {
+        window.open(webFallback, "_blank", "noopener");
+      }
+    }, 2000);
+  }
+</script></html>
