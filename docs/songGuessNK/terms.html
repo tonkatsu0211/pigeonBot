@@ -94,6 +94,35 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 <p>本規約は日本法に準拠します。</p>
 
 <h2>お問い合わせ</h2>
-<p>本Botに関するお問い合わせは、<a href="https://github.com/tonkatsu0211/songGuessNK/issues">GitHubのIssues</a>からお願いします。</p>
+<p>本Botに関するお問い合わせは、<a href="https://github.com/tonkatsu0211/songGuessNK/issues">GitHubのIssues</a>、または<a href="#" onclick="sendMail()">sgbot@tonkatsu.f5.si</a>へお願いします。</p>
 <footer>© 2026 tonkatsu0211</footer>
-</main></body></html>
+</main></body>
+<script>
+  function sendMail() {
+    const email = "sgbot@tonkatsu.f5.si";
+    const subject = "songGuessNKに関する問い合わせ";
+  
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+    const webFallback = `https://outlook.office.com/mail/0/deeplink/compose?to=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}`;
+  
+    let switched = false;
+  
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        switched = true;
+      }
+    };
+  
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+  
+    window.location.href = mailtoLink;
+  
+    setTimeout(() => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  
+      if (!switched) {
+        window.open(webFallback, "_blank", "noopener");
+      }
+    }, 2000);
+  }
+</script></html>
